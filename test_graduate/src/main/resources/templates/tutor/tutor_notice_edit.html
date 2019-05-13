@@ -1,0 +1,312 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '导师' )">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+
+
+  </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--上层-->
+  <!--上层-->
+  <header th:replace="tutor/comm/header::header"></header>
+
+  <!--中层-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <!--菜单栏-->
+    <section class="sidebar">
+
+
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">菜单</li>
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+            <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-commenting"></i> <span >问题交流</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+            <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+            <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>项目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+            <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+            <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+            <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+            <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+            <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+
+          </ul>
+        </li>
+
+        <li class="treeview" >
+          <a href="#">
+              <i class="fa fa-th"></i>
+            <span>学生管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa  fa-gear"></i>
+            <span>设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+            <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+          </ul>
+        </li>
+
+
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+  <!--  Context-->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">公告信息显示</h3>
+              </div>
+
+
+              <!-- /.box-header -->
+              <div class="box-body">
+                <ul class="products-list product-list-in-box" th:each="notice:${notices}">
+                  <!--<ul class="products-list product-list-in-box" th:each="notice:${pageInfo.list}">-->
+                  <li class="item">
+                    <div class="product-img">
+                      <img src="/static/dist/img/default-50x50.gif" alt="Product Image">
+                    </div>
+                    <div class="product-info">
+                      <span class="product-title" th:text="${notice.title}" data-toggle="modal" data-target="#modal-default" >
+                      </span>
+
+                      <span class="label label-success  pull-right" th:text="${notice.creattime}"></span>
+                      <div > <span class="product-description" th:text="${notice.context}" style="width: 90% !important; float: left !important; overflow: hidden !important;text-overflow: ellipsis !important; white-space: normal !important;"></span></div>
+
+                      <div class="pull-right">
+                        <a class="fa fa-edit" style="color: #007DDB"  th:onclick="'javascript:noticeEdit(\''+${notice.id}+'\');'"></a>
+                      <a class="fa fa-trash-o" style="color: red" th:onclick="'javascript:del(\''+${notice.id}+'\');'"></a>
+                      </div>
+                      <!---->
+                      <!--隐藏-->
+                       <div  th:id="'noticeId'+${notice.id}" class="register-box" style="display: none">
+                        <!--表单信息-->
+                         <form  th:id="'formNoticeId'+${notice.id}" method="post">
+                           <div class="form-group has-feedback">
+                             <input   type="test" class="form-control" name="id"  th:value="${notice.id}" readonly="readonly">
+                           </div>
+                          <div class="form-group has-feedback">
+                           标题： <input type="text" class="form-control"  name="title" th:value="${notice.title}" >
+                          </div>
+                           <div class="form-group has-feedback">
+                            内容：<textarea maxlength="150" class="textarea" style="width: 100%; height: 125px; font-size: 14px;
+                             line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; resize:none "
+                                     name="context" th:text="${notice.context}"
+                          ></textarea>
+                               <div style="position:absolute;bottom:10px;right:0;color:#000;">
+                               <span class="textareaInput">0</span>/<span class="textareaTotal">150</span>
+                             </div>
+                           </div>
+                          <div class="row">
+                            <div class="col-xs-4">
+                              <button th:id="'cancelId'+${notice.id}" id="cancelId" type="button" class="btn btn-primary btn-block btn-flat "
+                                      th:onclick="'javascript:cancel(\''+${notice.id}+'\');'" >
+                                取消
+                              </button>
+                            </div>
+                            <div class="col-xs-4 pull-right">
+                              <button th:id="'addNoticeSucessId'+${notice.id}" type="button" class="btn btn-primary btn-block btn-flat "
+                                      th:onclick="'javascript:addNoticeSucess(\''+${notice.id}+'\');'"
+                              >
+                                提交
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                      </div>
+                  </li>
+
+                  <!-- /.item -->
+                </ul>
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer text-center">
+                <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span> 条记录</p>
+                <div>
+                  <ul class="pagination pagination-lg" >
+                  <li ><a th:href="@{/tutor/editNotice(pageNum=1)}">首页</a></li>
+                  <li th:if="${pageInfo.getPageNum()} gt 1"> <a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()-1})}">上一页</a></li>
+                  <li th:if="${pageInfo.getPageNum()-3 >=1}" ><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()-3})}" th:text="${pageInfo.getPageNum() -3}" >1</a></li>
+                  <li th:if="${pageInfo.getPageNum()-2 >=1}" ><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()-2})}" th:text="${pageInfo.getPageNum() -2}" >1</a></li>
+                  <li th:if="${pageInfo.getPageNum()-1 >=1}" ><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()-1})}" th:text="${pageInfo.getPageNum() -1}" >1</a></li>
+                  <li class="active"><a href="#" th:text="${pageInfo.getPageNum()}" >1</a></li>
+                  <li th:if="${pageInfo.getPageNum()+1 <=pageInfo.getPages()}" ><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()+1})}" th:text="${pageInfo.getPageNum() +1}" >1</a></li>
+                  <li th:if="${pageInfo.getPageNum()+2 <=pageInfo.getPages()}" ><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()+2})}" th:text="${pageInfo.getPageNum() +2}" >1</a></li>
+                  <li th:if="${pageInfo.getPageNum()+3 <=pageInfo.getPages()}" ><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()+3})}" th:text="${pageInfo.getPageNum() +3}" >1</a></li>
+                  <li th:if="${pageInfo.getPageNum() lt pageInfo.getPages()}"><a th:href="@{/tutor/editNotice(pageNum=${pageInfo.getPageNum()+1})}">下一页</a></li>
+                  <li ><a th:href=" @{/tutor/editNotice(pageNum=${pageInfo.getPages()})}">尾页</a></li>
+                </ul></div>
+
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+
+    <!-- /.content -->
+  </div>
+
+
+
+  <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<script th:inline="javascript">
+  function noticeEdit(id) {
+
+     var index = layer.open({
+          title:'修改公告信息',
+         type: 1,
+         content: $("#noticeId"+id),
+         area: ['500px', '400px']
+      })
+  }
+  function cancel(id) {
+      layer.msg('取消成功', {time: 300}, function () {
+          layer.closeAll();
+          window.location.href="http://localhost:8080/tutor/editNotice?pageNum="+[[${pageInfo.getPageNum()}]];
+      });
+      
+  }
+  function addNoticeSucess(id) {   //添加
+          $.ajax({
+              //几个参数需要注意一下
+              type: "POST",//方法类型
+              url: '/tutor/updateNotice',  //url提交地址
+              dataType: "json",//预期服务器返回的数据类型
+              data: $('#formNoticeId'+id).serialize(), //把表单的数据打包
+              success: function (data) {
+                  if (data["success"]) {
+                      layer.msg('更改成功', {time: 300}, function () {
+                          layer.closeAll();
+                          window.location.href="http://localhost:8080/tutor/editNotice?pageNum="+[[${pageInfo.getPageNum()}]]; //重定向当前页面
+                      });
+                  }
+              },
+              error: function (err) {
+                  alert("错误");
+              },
+          });
+  }
+  function del(noticeId) {
+      layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+          $.ajax({
+              //几个参数需要注意一下
+              type: "POST",//方法类型
+              url: '/tutor/delNotice',  //url提交地址
+              dataType: "json",//预期服务器返回的数据类型
+              data:{"noticeId": noticeId} , //把表单的数据打包
+              success: function (data) {
+                  if (data["success"]) {
+                      layer.msg('删除成功', {time: 300}, function () {
+                          layer.closeAll();
+                          window.location.href="http://localhost:8080/tutor/editNotice?pageNum="+[[${pageInfo.getPageNum()}]]; //重定向当前页面
+                      });
+                  }
+              },
+              error: function (err) {
+                  alert("删除失败");
+              },
+          });
+
+      });
+      
+  }
+
+
+
+
+  $(document).ready(function(){   //文本域字数
+
+      var lenInput = $('.textarea').text().length;
+
+      $(".textarea").keyup(function(){
+          lenInput = $(this).val().length;
+          if(lenInput>0 && lenInput<=300){
+              $('.textareaInput').html(lenInput);
+              $('.textarea-btn').attr('disabled',false);
+          }else{
+              $('.textarea-btn').attr('disabled',true);
+          }
+      });
+  });
+
+
+</script>
+
+
+</body>
+</html>

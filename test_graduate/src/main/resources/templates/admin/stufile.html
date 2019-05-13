@@ -1,0 +1,299 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '管理员' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <header th:replace="admin/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>班级管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li > <a id="addClassId"><i class="fa fa-circle-o"></i>添加班级 </a></li>
+                        <li class="active"><a th:href="@{/clazz/clazzManage}"><i class="fa fa-circle-o"></i>班级信息管理 </a></li>
+                        <li><a th:href="@{/clazz/allClazz}"><i class="fa fa-circle-o"></i>查询班级信息</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li ><a th:href="@{/admin/allStudent}"><i class="fa fa-circle-o"></i>学生信息查询</a></li>
+                        <li><a th:href="@{/admin/stuManage}" ><i class="fa fa-circle-o"></i>学生信息管理</a></li>
+                        <li><a th:href="@{/admin/allStuDel}"><i class="fa fa-circle-o"></i>学生信息查询(删除)</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview" >
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>导师管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/admin/selectAllTutor}"><i class="fa fa-circle-o"></i>查询导师信息</a></li>
+                        <li ><a id="addTutorId"><i class="fa fa-circle-o"></i>导师新增</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+
+
+
+
+    <!--空白 Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">班级学生信息上传</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="panel panel-default margin">
+                                <p class="lead">
+                                    请按以下步骤执行
+                                <ol>
+                                    <li>下载统一导入模板<a th:href="@{/admin/stuDownloadFile}" class="btn-link"><h6>
+                                        《学员信息导入数据_模板.xlsx》</h6>
+                                    </a><br/></li>
+                                    <li>将学员基础信息填入模板,上传提交。</li>
+                                </ol>
+                                </p>
+                            </div>
+                            <div id="uploader" class="wu-example margin">
+                                <!--用来存放文件信息-->
+                                <div >
+                                    <div id="picker">选择文件</div>
+                                    <button id="uploadBtn" class="btn btn-default">开始上传</button>
+                                    <button style="margin-left: 10px;" id="reFresh" class="btn btn-success btn-sm">刷新</button>
+                                </div>
+                                <div id="thelist" class="uploader-list"></div>
+                            </div>
+
+                            <div class="box-footer" id="btnOKDiv">
+                                <a  class="btn btn-flat btn-success pull-right layerClose" th:href="@{/clazz/clazzManage}">重新选择</a>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--隐藏部分-->
+    <div th:replace="commons/addclazz_tutor::addtutor"> </div>
+    <div th:replace="commons/addclazz_tutor::addclazz"> </div>
+    <!---->
+    <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script th:inline="javascript">
+
+
+    $(function () {
+        var clazzId = [[${clazzId}]];
+
+        $("#reFresh").click(function () {
+            window.location.reload();
+        })
+
+        $("#addClassId").click(function () {  //添加班级按钮  layer 弹出框
+            var index = layer.open({
+                type: 1,
+                content: $("#addClassMessageId"),
+                area: ['400px', '300px']
+            });
+        });
+
+        //-------------------
+        $("#addTutorId").click(function () {  //添加导师信息  layer 弹出框
+            var index2 = layer.open({
+                type: 1,
+                title: "",
+                content: $("#addTutorMessageId"),
+                area: ['500px', '400px']
+            });
+        });
+
+        $("#classCancelId").click(function () { //取消
+            layer.msg('取消成功', {time: 300}, function () {
+                layer.closeAll();
+            });
+        });
+
+        $("#addClassSucessId").click(function () {  //添加班级
+            var clazzName=$("#clazz").val();
+            if (clazzName.indexOf(" ") >= 0 || clazzName == null||clazzName==""){  //判断不为空 或空格
+                alert("班级名不能为空")
+                return false;
+            }
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/clazz/addClazz',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formClazzId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    }else {
+                        alert("班级名重复")
+                    }
+                },
+                error: function () {
+                    alert("信息格式出错，重新输入！");
+                },
+            });
+        });
+        //-------------------
+
+        $("#tutorCancelId").click(function () { //取消
+            layer.msg('取消成功', {time: 300}, function () {
+                layer.closeAll()
+            });
+        });
+
+        $("#addTutorSucessId").click(function () {  //添加导师
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/admin/addTutor',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formTutorId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    } if (data["err"]) {
+                        alert("导师重名，请重新填写")
+                    }if (data["message"]){
+                        alert("请输入姓名")
+                    }
+                },
+                error: function (err) {
+                    alert("信息格式错误");
+                },
+            });
+        });
+        //文件部分
+
+        var uploader = WebUploader.create({
+            // swf文件路径
+            swf: '/static/bower_components/webuploader-0.1.5/Uploader.swf',
+            // 文件接收服务端。
+            server:'/admin/uploadStudents',
+            // 选择文件的按钮。可选。
+            formData: {"clazzId": clazzId},
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            fileNumLimit: 1
+        });
+
+        $("#uploadBtn").click(function () {
+
+            uploader.upload();
+        });
+
+        uploader.on('fileQueued', function (file) {
+
+            if (file.name.indexOf("xls") == -1 && file.name.indexOf("xlsx") == -1) {
+                layer.msg("文件格式不对", {time: 700});
+                location.reload();
+                return;
+            }
+            $("#thelist").append('<div id="' + file.id + '" class="item">' +
+                '<h4 class="info">' + file.name + '</h4>' +
+                '<p class="state">等待上传...</p>' +
+                '</div>');
+        });
+        uploader.on('uploadProgress', function (file, percentage) {//正在上传
+            var $li = $('#' + file.id),
+                $percent = $li.find('.progress .progress-bar');
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                    '</div>' +
+                    '</div>').appendTo($li).find('.progress-bar');
+            }
+            $li.find('p.state').text('上传中');
+            $percent.css('width', percentage * 100 + '%');
+        });
+        uploader.on('uploadSuccess', function (file, data) {//上传成功服务器不会出现异常！！，http状态为 200
+            var $li = $('#' + file.id);
+            if (data["success"]) {
+                $("#thelist").find("h4").html("");
+                $li.find('p.state').text("成功插入了" + data.updateCount + "条数据" +' Message:'+data.sameAccount).css({
+                    "color": "green",
+                    "font-size": "20px"
+                });
+                $("#btnOKDiv").show();
+            } else {
+                $li.find('p.state').text("操作失败! " + data.msg).css({"background-color": "red", "font-size": "20px"});
+            }
+        });
+
+        uploader.on('uploadError', function (file) { //出错
+            var $li = $('#' + file.id);
+            $li.find('p.state').text('出错').css({"background-color": "red", "font-size": "20px"});
+        });
+
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').fadeOut();
+        });
+
+    });
+</script>
+</body>
+</html>

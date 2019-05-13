@@ -1,0 +1,385 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '项目库' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <header th:replace="tutor/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+                        <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i> <span >问题交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li class="active"><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+                        <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+                        <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+                        <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+                        <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+                        <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview" >
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview" >
+                    <a href="#">
+                      <i class="fa  fa-gear"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/tutorPIM}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                项目库
+                <small>
+                    <button  class="btn btn-block btn-success" id="addProjectId">新增</button>
+                </small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>项目管理</a></li>
+                <li class="active">项目库展示</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content" >
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+
+                        <!-- /.box-header -->
+                        <div class="box-body" >
+
+                            <div class="team-members row" >
+                                <!-- effect-3 html -->
+                                <div class="single-member effect-3"  th:each="project:${projects}">
+                                    <div class="member-image">
+                                        <img src="/static/img/java.jpg" alt="Member">
+                                    </div>
+                                    <div class="member-info">
+                                        <h3 th:text="${project.getProjectName()}"></h3>
+                                        <h6 th:text="${project.projectGraduate}"></h6>
+                                       <span th:text="${project.projectDescription}" style=" width: 100%; height: auto; word-wrap:break-word; word-break:break-all;overflow: hidden;"></span>
+                                        <div class="tools">
+                                            <a class="fa fa-edit"  style="color: #007DDB" th:onclick="'javascript:projectEdit(\''+${project.id}+'\');'" ></a>
+                                            <a class="fa fa-trash-o" style=" color:red" href="javascript:void(0)"  th:onclick="'javascript:delProject(\''+${project.id}+'\');'"></a>
+                                        </div>
+                                    </div>
+
+                                    <!---->
+                                    <div th:id="'editProject'+${project.id}"  class="register-box "  style="display: none;" >
+                                        <form method="post" th:id="'form'+${project.id}">
+                                            <div class="form-group">
+                                                <input name="id" th:value="${project.id}" style="display: none">
+                                                项目名：
+                                                <input  type="text"   maxlength="12" name="projectName"   class="form-control"  th:value="${project.getProjectName()}">
+                                            </div>
+                                            <div class="form-group">
+                                              困难指数：
+                                                <div class="btn-group " >
+                                                    <button type="button" class="btn btn-success btn-flat" th:text="${project.projectGraduate}"></button>
+                                                    <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu">
+                                                        <input name="projectGraduate" type="radio" value="一般" >一般
+                                                        <input name="projectGraduate" type="radio" value="困难">困难
+                                                        <input name="projectGraduate" type="radio" value="难">难
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback" style="padding-top: 15px;">
+                                                描述：<textarea   maxlength="60" class="textarea" style="width: 100%; height: 125px; font-size: 14px;
+                             line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; resize:none "
+                                                              name="projectDescription" th:text="${project.projectDescription}"
+                                            ></textarea>
+                                                <div style="position:absolute;bottom:10px;right:0;color:#000;">
+                                                    <span class="textareaInput">0</span>/<span class="textareaTotal">60</span>
+                                                </div>
+                                            </div>
+                                            <div class="box-footer clearfix">
+                                                <button type="button" class="pull-right btn btn-default" th:id="'send'+${project.id}"
+                                                        th:onclick="'javascript:editProjectSucess(\''+${project.id}+'\');'">修改
+                                                    <i class="fa fa-arrow-circle-right"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- effect-3 html end -->
+                            </div>
+                        </div>
+                        <div class="box-footer text-center">
+                            <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span> 条记录</p>
+                            <div>
+                                <ul class="pagination pagination-lg" >
+                                    <li ><a th:href="@{/project/projectList(pageNum=1)}">首页</a></li>
+                                    <li th:if="${pageInfo.getPageNum()} gt 1">
+                                        <a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()-1})}">上一页</a>
+                                    </li>
+                                    <li th:if="${pageInfo.getPageNum()-3 >=1}" >
+                                        <a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()-3})}" th:text="${pageInfo.getPageNum() -3}" >1</a>
+                                    </li>
+                                    <li th:if="${pageInfo.getPageNum()-2 >=1}" >
+                                        <a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()-2})}" th:text="${pageInfo.getPageNum() -2}" >1</a>
+                                    </li>
+                                    <li th:if="${pageInfo.getPageNum()-1 >=1}" >
+                                        <a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()-1})}" th:text="${pageInfo.getPageNum() -1}" >1</a>
+                                    </li>
+
+                                    <li class="active"><a href="#" th:text="${pageInfo.getPageNum()}" >1</a></li>
+                                    <li th:if="${pageInfo.getPageNum()+1 <=pageInfo.getPages()}" ><a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()+1})}" th:text="${pageInfo.getPageNum() +1}" >1</a></li>
+                                    <li th:if="${pageInfo.getPageNum()+2 <=pageInfo.getPages()}" ><a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()+2})}" th:text="${pageInfo.getPageNum() +2}" >1</a></li>
+                                    <li th:if="${pageInfo.getPageNum()+3 <=pageInfo.getPages()}" ><a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()+3})}" th:text="${pageInfo.getPageNum() +3}" >1</a></li>
+                                    <li th:if="${pageInfo.getPageNum() lt pageInfo.getPages()}"><a th:href="@{/project/projectList(pageNum=${pageInfo.getPageNum()+1})}">下一页</a></li>
+                                    <li ><a th:href=" @{/project/projectList(pageNum=${pageInfo.getPages()})}">尾页</a></li>
+                                </ul></div>
+
+                        </div>
+                    </div>
+
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <div id="addProjectMessageId" class="register-box" style="display: none">
+                <form method="post" id="formId">
+                    <div class="form-group">
+                        项目名：
+                        <input  type="text"   maxlength="12" name="projectName"  id="projectNameId" class="form-control"  placeholder="最大输入12个字数......">
+                    </div>
+                    <div class="form-group">
+                        类型：
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success btn-flat">难度</button>
+                            <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                                <input name="projectGraduate" type="radio" value="一般" checked>一般
+                                <input name="projectGraduate" type="radio" value="困难">困难
+                                <input name="projectGraduate" type="radio" value="难">难
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        描述：<textarea  id="textareaId" maxlength="60" class="textarea" style="width: 100%; height: 125px; font-size: 14px;
+                             line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; resize:none "
+                                      name="projectDescription" placeholder="请输入......"
+                    ></textarea>
+                        <div style="position:absolute;bottom:10px;right:0;color:#000;">
+                            <span class="textareaInput">0</span>/<span class="textareaTotal">60</span>
+                        </div>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <button type="button" class="pull-right btn btn-default" id="sendId" >提交
+                            <i class="fa fa-arrow-circle-right"></i></button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.col -->
+            <!-- /.row -->
+        </section>
+
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script th:inline="javascript">
+    
+    function projectEdit(projectId) { //打开
+        layer.open({
+            title:'修改项目',
+            type: 1,
+            content: $("#editProject"+projectId),
+            area: ['500px', '400px']
+        });
+    }
+    
+    function editProjectSucess(projectId) {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            url:  '/project/editProject',  //url提交地址
+            dataType: "json",//预期服务器返回的数据类型
+            data: $('#form'+projectId).serialize(), //把表单的数据打包
+            success: function (data) {
+                if (data["success"]) {
+                    layer.msg('更改成功', {time: 300}, function () {
+                        layer.closeAll();
+                        window.location.href="http://localhost:8080/project/projectList?pageNum="+[[${pageInfo.getPageNum()}]]; //重定向当前页面
+                    });
+                }
+            },
+            error: function (err) {
+                alert("错误");
+            },
+        });
+    }
+
+    function delProject(projectId) {
+        layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+            //do something
+            $.ajax({
+                type: "POST",
+                 url:'/project/del',
+                dataType:'json',
+                data:{"projectId":projectId},
+                success:function (msg) {
+                    if (msg['success']) {
+                        layer.msg('删除成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.location.href = "http://localhost:8080/project/projectList?pageNum=" + [[${pageInfo.getPageNum()}]]; //重定向当前页面
+                        });
+                    }
+                },
+                error: function (err) {
+                    alert("删除失败");
+                },
+            })
+
+            layer.close(index);
+        });
+    }
+
+
+    $(function () {
+        $("#addProjectId").click(function () {
+           layer.open({
+                title:'新增项目',
+                type: 1,
+                content: $("#addProjectMessageId"),
+                area: ['500px', '400px']
+            });
+        });
+
+        $("#sendId").click(function () {  //添加
+            if ($(" #textareaId").val()!=="" &&  $("input[type='text']").val()!==""){
+
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    url: '/project/add',  //url提交地址
+                    dataType: "json",//预期服务器返回的数据类型
+                    data: $('#formId').serialize(), //把表单的数据打包
+                    success: function (data) {
+                        if (data["success"]) {
+                            layer.msg('添加成功', {time: 300}, function () {
+                                layer.closeAll();
+                                window.parent.location.reload();//刷新父页面
+                                $("input[type='text']").val("");
+                                $(" #textareaId").val("");
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        alert("信息格式出错，重新输入！");
+                    },
+                });
+            }else {
+                alert("项目名和描述都不能为空！")
+            }
+
+        });
+
+    })
+    $(document).ready(function(){   //文本域字数
+
+        var lenInput = $('.textarea').text().length;
+
+        $(".textarea").keyup(function(){
+            lenInput = $(this).val().length;
+            if(lenInput>0 && lenInput<=60){
+                $('.textareaInput').html(lenInput);
+                $('.textarea-btn').attr('disabled',false);
+            }else{
+                $('.textarea-btn').attr('disabled',true);
+            }
+        });
+    });
+</script>
+</body>
+</html>

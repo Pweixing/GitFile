@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qhg.dao.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.qhg.model.Student" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="stu_account" property="stuAccount" jdbcType="VARCHAR" />
+    <result column="stu_name" property="stuName" jdbcType="VARCHAR" />
+    <result column="stu_password" property="stuPassword" jdbcType="VARCHAR" />
+    <result column="stu_age" property="stuAge" jdbcType="INTEGER" />
+    <result column="stu_sex" property="stuSex" jdbcType="VARCHAR" />
+    <result column="stu_classId" property="stuClassid" jdbcType="VARCHAR" />
+    <result column="stu_tutorId" property="stuTutorid" jdbcType="VARCHAR" />
+    <result column="stu_iphone" property="stuIphone" jdbcType="INTEGER" />
+    <result column="stu_collage" property="stuCollage" jdbcType="VARCHAR" />
+    <result column="stu_specialty" property="stuSpecialty" jdbcType="VARCHAR" />
+    <result column="stu_isLeader" property="stuIsleader" jdbcType="INTEGER" />
+    <result column="stu_groupId" property="stuGroupid" jdbcType="VARCHAR" />
+    <result column="stu_score" property="stuScore" jdbcType="INTEGER" />
+    <result column="stu_lock" property="stuLock" jdbcType="INTEGER" />
+    <result column="stu_delete" property="stuDelete" jdbcType="INTEGER" />
+    <result column="stu_remake" property="stuRemake" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, stu_account, stu_name, stu_password, stu_age, stu_sex, stu_classId, stu_tutorId, 
+    stu_iphone, stu_collage, stu_specialty, stu_isLeader, stu_groupId, stu_score, stu_lock, 
+    stu_delete, stu_remake
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qhg.model.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qhg.model.StudentExample" >
+    delete from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qhg.model.Student" >
+    insert into student (id, stu_account, stu_name, 
+      stu_password, stu_age, stu_sex, 
+      stu_classId, stu_tutorId, stu_iphone, 
+      stu_collage, stu_specialty, stu_isLeader, 
+      stu_groupId, stu_score, stu_lock, 
+      stu_delete, stu_remake)
+    values (#{id,jdbcType=VARCHAR}, #{stuAccount,jdbcType=VARCHAR}, #{stuName,jdbcType=VARCHAR}, 
+      #{stuPassword,jdbcType=VARCHAR}, #{stuAge,jdbcType=INTEGER}, #{stuSex,jdbcType=VARCHAR}, 
+      #{stuClassid,jdbcType=VARCHAR}, #{stuTutorid,jdbcType=VARCHAR}, #{stuIphone,jdbcType=INTEGER}, 
+      #{stuCollage,jdbcType=VARCHAR}, #{stuSpecialty,jdbcType=VARCHAR}, #{stuIsleader,jdbcType=INTEGER}, 
+      #{stuGroupid,jdbcType=VARCHAR}, #{stuScore,jdbcType=INTEGER}, #{stuLock,jdbcType=INTEGER}, 
+      #{stuDelete,jdbcType=INTEGER}, #{stuRemake,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qhg.model.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stuAccount != null" >
+        stu_account,
+      </if>
+      <if test="stuName != null" >
+        stu_name,
+      </if>
+      <if test="stuPassword != null" >
+        stu_password,
+      </if>
+      <if test="stuAge != null" >
+        stu_age,
+      </if>
+      <if test="stuSex != null" >
+        stu_sex,
+      </if>
+      <if test="stuClassid != null" >
+        stu_classId,
+      </if>
+      <if test="stuTutorid != null" >
+        stu_tutorId,
+      </if>
+      <if test="stuIphone != null" >
+        stu_iphone,
+      </if>
+      <if test="stuCollage != null" >
+        stu_collage,
+      </if>
+      <if test="stuSpecialty != null" >
+        stu_specialty,
+      </if>
+      <if test="stuIsleader != null" >
+        stu_isLeader,
+      </if>
+      <if test="stuGroupid != null" >
+        stu_groupId,
+      </if>
+      <if test="stuScore != null" >
+        stu_score,
+      </if>
+      <if test="stuLock != null" >
+        stu_lock,
+      </if>
+      <if test="stuDelete != null" >
+        stu_delete,
+      </if>
+      <if test="stuRemake != null" >
+        stu_remake,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="stuAccount != null" >
+        #{stuAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPassword != null" >
+        #{stuPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="stuAge != null" >
+        #{stuAge,jdbcType=INTEGER},
+      </if>
+      <if test="stuSex != null" >
+        #{stuSex,jdbcType=VARCHAR},
+      </if>
+      <if test="stuClassid != null" >
+        #{stuClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuTutorid != null" >
+        #{stuTutorid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuIphone != null" >
+        #{stuIphone,jdbcType=INTEGER},
+      </if>
+      <if test="stuCollage != null" >
+        #{stuCollage,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSpecialty != null" >
+        #{stuSpecialty,jdbcType=VARCHAR},
+      </if>
+      <if test="stuIsleader != null" >
+        #{stuIsleader,jdbcType=INTEGER},
+      </if>
+      <if test="stuGroupid != null" >
+        #{stuGroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore != null" >
+        #{stuScore,jdbcType=INTEGER},
+      </if>
+      <if test="stuLock != null" >
+        #{stuLock,jdbcType=INTEGER},
+      </if>
+      <if test="stuDelete != null" >
+        #{stuDelete,jdbcType=INTEGER},
+      </if>
+      <if test="stuRemake != null" >
+        #{stuRemake,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qhg.model.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update student
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuAccount != null" >
+        stu_account = #{record.stuAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuName != null" >
+        stu_name = #{record.stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuPassword != null" >
+        stu_password = #{record.stuPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuAge != null" >
+        stu_age = #{record.stuAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuSex != null" >
+        stu_sex = #{record.stuSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuClassid != null" >
+        stu_classId = #{record.stuClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuTutorid != null" >
+        stu_tutorId = #{record.stuTutorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuIphone != null" >
+        stu_iphone = #{record.stuIphone,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuCollage != null" >
+        stu_collage = #{record.stuCollage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuSpecialty != null" >
+        stu_specialty = #{record.stuSpecialty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuIsleader != null" >
+        stu_isLeader = #{record.stuIsleader,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuGroupid != null" >
+        stu_groupId = #{record.stuGroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuScore != null" >
+        stu_score = #{record.stuScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuLock != null" >
+        stu_lock = #{record.stuLock,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuDelete != null" >
+        stu_delete = #{record.stuDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuRemake != null" >
+        stu_remake = #{record.stuRemake,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update student
+    set id = #{record.id,jdbcType=VARCHAR},
+      stu_account = #{record.stuAccount,jdbcType=VARCHAR},
+      stu_name = #{record.stuName,jdbcType=VARCHAR},
+      stu_password = #{record.stuPassword,jdbcType=VARCHAR},
+      stu_age = #{record.stuAge,jdbcType=INTEGER},
+      stu_sex = #{record.stuSex,jdbcType=VARCHAR},
+      stu_classId = #{record.stuClassid,jdbcType=VARCHAR},
+      stu_tutorId = #{record.stuTutorid,jdbcType=VARCHAR},
+      stu_iphone = #{record.stuIphone,jdbcType=INTEGER},
+      stu_collage = #{record.stuCollage,jdbcType=VARCHAR},
+      stu_specialty = #{record.stuSpecialty,jdbcType=VARCHAR},
+      stu_isLeader = #{record.stuIsleader,jdbcType=INTEGER},
+      stu_groupId = #{record.stuGroupid,jdbcType=VARCHAR},
+      stu_score = #{record.stuScore,jdbcType=INTEGER},
+      stu_lock = #{record.stuLock,jdbcType=INTEGER},
+      stu_delete = #{record.stuDelete,jdbcType=INTEGER},
+      stu_remake = #{record.stuRemake,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qhg.model.Student" >
+    update student
+    <set >
+      <if test="stuAccount != null" >
+        stu_account = #{stuAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        stu_name = #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPassword != null" >
+        stu_password = #{stuPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="stuAge != null" >
+        stu_age = #{stuAge,jdbcType=INTEGER},
+      </if>
+      <if test="stuSex != null" >
+        stu_sex = #{stuSex,jdbcType=VARCHAR},
+      </if>
+      <if test="stuClassid != null" >
+        stu_classId = #{stuClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuTutorid != null" >
+        stu_tutorId = #{stuTutorid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuIphone != null" >
+        stu_iphone = #{stuIphone,jdbcType=INTEGER},
+      </if>
+      <if test="stuCollage != null" >
+        stu_collage = #{stuCollage,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSpecialty != null" >
+        stu_specialty = #{stuSpecialty,jdbcType=VARCHAR},
+      </if>
+      <if test="stuIsleader != null" >
+        stu_isLeader = #{stuIsleader,jdbcType=INTEGER},
+      </if>
+      <if test="stuGroupid != null" >
+        stu_groupId = #{stuGroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore != null" >
+        stu_score = #{stuScore,jdbcType=INTEGER},
+      </if>
+      <if test="stuLock != null" >
+        stu_lock = #{stuLock,jdbcType=INTEGER},
+      </if>
+      <if test="stuDelete != null" >
+        stu_delete = #{stuDelete,jdbcType=INTEGER},
+      </if>
+      <if test="stuRemake != null" >
+        stu_remake = #{stuRemake,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qhg.model.Student" >
+    update student
+    set stu_account = #{stuAccount,jdbcType=VARCHAR},
+      stu_name = #{stuName,jdbcType=VARCHAR},
+      stu_password = #{stuPassword,jdbcType=VARCHAR},
+      stu_age = #{stuAge,jdbcType=INTEGER},
+      stu_sex = #{stuSex,jdbcType=VARCHAR},
+      stu_classId = #{stuClassid,jdbcType=VARCHAR},
+      stu_tutorId = #{stuTutorid,jdbcType=VARCHAR},
+      stu_iphone = #{stuIphone,jdbcType=INTEGER},
+      stu_collage = #{stuCollage,jdbcType=VARCHAR},
+      stu_specialty = #{stuSpecialty,jdbcType=VARCHAR},
+      stu_isLeader = #{stuIsleader,jdbcType=INTEGER},
+      stu_groupId = #{stuGroupid,jdbcType=VARCHAR},
+      stu_score = #{stuScore,jdbcType=INTEGER},
+      stu_lock = #{stuLock,jdbcType=INTEGER},
+      stu_delete = #{stuDelete,jdbcType=INTEGER},
+      stu_remake = #{stuRemake,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAllStudent" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+  </select>
+</mapper>

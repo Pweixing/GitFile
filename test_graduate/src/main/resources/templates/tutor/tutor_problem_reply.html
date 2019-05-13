@@ -1,0 +1,311 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '导师' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <!--上层-->
+    <header th:replace="tutor/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+                        <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i> <span >问题交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+                        <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+                        <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+                        <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+                        <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+                        <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview" >
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview" >
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+
+
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="background-color: #b2dba1">
+        <section class="content">
+            <div class="layui-card-body" >
+                <!--问题-->
+                <div class="panel-body">
+                    <a href="javascript:;" class="media-left">
+                        <img th:src="@{/static/img/log_xs.jpg}" width="46px" height="46px">
+                    </a>
+                    <div class="media-body">
+                        <div class="pad-btm">
+                            <p>
+                                <small>发布者：</small>
+                                <b th:text="${Name}"></b></p>
+                            <p class="min-font">
+                                <small th:text="${problem.creatTime}"></small>
+                            </p>
+                        </div>
+                        <span><span>问题： </span></span><br>
+                        <p style="margin-right: 40px;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b
+                                th:text="${problem.problemContext}"></b></p>
+                        </span>
+
+                    </div>
+                </div>
+
+                <!--发布内容-->
+                <div class="layui-col-md12">
+                    <form class="layui-form">
+                        <div class="layui-form-item layui-form-text" style="margin-left: 80px; margin-right: 60px;">
+                            <textarea id="descId" name="" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        </div>
+                        <div style="margin-left: 80px;">
+                            <button class="layui-btn" type="button"
+                                    th:onclick="'javascript:sumbit(\''+${problem.id}+'\')'">发表
+                            </button>
+                            <a href="javascript:history.go(-1)" class="btn btn-warning " >返回上一级</a>
+                        </div>
+                    </form>
+                </div>
+                <!-- p判断条数-->
+                <div   th:if="${replies.size()} lt 6" class="layui-row layui-col-space15"  >
+                    <div class="layui-card-body">
+                        <div  class="panel-body" th:each=" reply:${replies}">
+                            <hr  noshade="noshade" align="right" color="#2b2b2b" />
+                            <a href="javascript:;" class="media-left">
+                                <img th:src="@{/static/img/log_xs.jpg}" width="46px" height="46px">
+                            </a>
+                            <div class="media-body" >
+                                <div class="pad-btm" >
+                                    <p>
+                                        <b th:text="${reply.replyName}"></b>
+                                    </p>
+                                </div>
+                                <b th:if="${session.tutor.id==reply.replierId}" >
+                                    <span>&nbsp;&nbsp;&nbsp;在</span><span
+                                        th:text="${reply.replyTime}"></span><span>回复:&nbsp;&nbsp;</span>
+                                    <b style="color:#ff851b"
+                                       th:text="${reply.replyContext}"></b></b>
+                                <p  th:if="${session.tutor.id!=reply.replierId}">
+                                    <span>&nbsp;&nbsp;&nbsp;在</span><span
+                                        th:text="${reply.replyTime}"></span><span>回复:&nbsp;&nbsp;</span><b
+                                        th:text="${reply.replyContext}"></b></p>
+                            </div>
+                        </div>
+                        <hr  noshade="noshade" align="right" color="#2b2b2b" />
+
+                    </div>
+                </div >
+                <!--列表-->
+                <div  th:if="${replies.size()} ge 6" id="replyList" class="layui-row layui-col-space15">
+                    <div class="layui-card-body">
+                        <div  class="panel-body" th:each=" reply:${replyList}">
+                            <hr  noshade="noshade" align="right" color="#2b2b2b" />
+                            <a href="javascript:;" class="media-left">
+                                <img th:src="@{/static/img/log_xs.jpg}" width="46px" height="46px">
+                            </a>
+                            <div class="media-body" >
+                                <div class="pad-btm" >
+                                    <p>
+                                        <b th:text="${reply.replyName}"></b>
+                                    </p>
+                                </div>
+                                <b th:if="${session.tutor.id==reply.replierId}" >
+                                    <span>&nbsp;&nbsp;&nbsp;在</span><span
+                                            th:text="${reply.replyTime}"></span><span>回复:&nbsp;&nbsp;</span>
+                                    <b style="color:#ff851b"
+                                        th:text="${reply.replyContext}"></b></b>
+                                <p  th:if="${session.tutor.id!=reply.replierId}">
+                                    <span>&nbsp;&nbsp;&nbsp;在</span><span
+                                        th:text="${reply.replyTime}"></span><span>回复:&nbsp;&nbsp;</span><b
+                                        th:text="${reply.replyContext}"></b></p>
+                            </div>
+                        </div>
+                        <hr  noshade="noshade" align="right" color="#2b2b2b" />
+                        <div id="pageId" class="message-content-btn" style="margin-left: 10px">
+                            <button type="button" id="moreId" class="layui-btn">更多</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--隐藏-->
+                <div  id="replies" class="layui-row layui-col-space15" style="display: none">
+                    <div class="layui-row message-content-btn">
+                        <button type="button" id="packUp" class="layui-btn">收起</button>
+                    </div>
+                    <div class="layui-card-body">
+                    <div class="panel-body " th:each=" reply:${replies}"  >
+                        <hr  noshade="noshade" align="right" color="#2b2b2b" />
+                        <a href="javascript:;" class="media-left">
+                            <img th:src="@{/static/img/log_xs.jpg}" width="46px" height="46px">
+                        </a>
+                        <div class="media-body" >
+                            <div class="pad-btm" >
+                                <p>
+                                    <b th:text="${reply.replyName}"></b>
+                                </p>
+                            </div>
+                            <b th:if="${session.tutor.id==reply.replierId}" >
+                                <span>&nbsp;&nbsp;&nbsp;在</span><span
+                                    th:text="${reply.replyTime}"></span><span>回复:&nbsp;&nbsp;</span>
+                                <b style="color:#ff851b"
+                                   th:text="${reply.replyContext}"></b></b>
+                            <p  th:if="${session.tutor.id!=reply.replierId}">
+                                <span>&nbsp;&nbsp;&nbsp;在</span><span
+                                    th:text="${reply.replyTime}"></span><span>回复:&nbsp;&nbsp;</span><b
+                                    th:text="${reply.replyContext}"></b></p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+
+</div>
+
+<!-- page script -->
+<script th:inline="javascript">
+
+
+    var replierId = [[${session.tutor.id}]]
+
+    function sumbit(problemId) {
+        var text = $("#descId").val().trim();
+
+        if(text==""){
+            alert("不能为空");
+            $("#descId").val("");
+            return false;
+        }
+
+
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            url: '/reply/replyStuProblem',  //url提交地址
+            dataType: "json",//预期服务器返回的数据类型
+            data: {"problemId": problemId, "context": text, "replierId": replierId}
+            //或者是{"ss":id} // $('#formId').serialize(), //把表单的数据打包
+            ,
+            success: function (data) {
+                if (data["success"]) {
+                    layer.msg('添加成功', {time: 400}, function () {
+                        layer.closeAll();
+                        $("#descId").val("");
+                        window.location.reload();
+                    });
+                }
+            },
+            error: function () {
+                alert("错误！");
+            },
+        });
+    }
+
+    $(function () {
+        $("#moreId").click(function () {
+            $("#replies").show();
+            $("#replyList").hide();
+
+        })
+        $("#packUp").click(function () {
+            $("#replies").hide();
+            $("#replyList").show();
+        })
+
+
+    })
+
+</script>
+</body>
+</html>

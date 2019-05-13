@@ -1,0 +1,211 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '管理员' )">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <header th:replace="admin/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>班级管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a id="addClassId"><i class="fa fa-circle-o"></i>添加班级 </a></li>
+                        <li><a th:href="@{/clazz/clazzManage}"><i class="fa fa-circle-o"></i>班级信息管理 </a></li>
+                        <li><a th:href="@{/clazz/allClazz}"><i class="fa fa-circle-o"></i>查询班级信息</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/admin/allStudent}"><i class="fa fa-circle-o"></i>学生信息查询</a></li>
+                        <li><a th:href="@{/admin/stuManage}"><i class="fa fa-circle-o"></i>学生信息管理</a></li>
+                        <li><a th:href="@{/admin/allStuDel}"><i class="fa fa-circle-o"></i>学生信息查询(删除)</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>导师管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/admin/selectAllTutor}"><i class="fa fa-circle-o"></i>查询导师信息</a></li>
+                        <li><a id="addTutorId"><i class="fa fa-circle-o"></i>导师新增</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="background: #2b2b2b">
+        <section class="content-header">
+            <h1>
+                <small>校园风光</small>
+            </h1>
+
+        </section>
+        <section class="content">
+            <div class="layui-carousel" id="test1" style="margin:0 auto">
+                <div carousel-item>
+                    <div><img src="/static/img/collage1.jpeg"></div>
+                    <div><img src="/static/img/collage2.jpeg"></div>
+                    <div><img src="/static/img/collage3.jpeg"></div>
+                    <div><img src="/static/img/collage4.jpeg"></div>
+                    <div><img src="/static/img/collage5.jpeg"></div>
+                    <div><img src="/static/img/collage6.jpeg"></div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <div th:replace="commons/addclazz_tutor::addtutor"></div>
+    <div th:replace="commons/addclazz_tutor::addclazz"></div>
+    <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script th:inline="javascript">
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '800px' //设置容器宽度
+            ,height:'533px'
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+            // ,interval:'1000' //自动切换的时间间隔，单位：ms（毫秒），不能低于800
+        });
+    });
+
+    $(function () {
+        $("#addClassId").click(function () {  //添加班级按钮  layer 弹出框
+            layer.open({
+                type: 1,
+                content: $("#addClassMessageId"),
+                area: ['400px', '300px']
+            });
+        });
+
+        //-------------------
+        $("#addTutorId").click(function () {  //添加导师信息  layer 弹出框
+            layer.open({
+                type: 1,
+                title: "导师新增",
+                content: $("#addTutorMessageId"),
+                area: ['500px', '400px']
+            });
+        });
+
+        $("#classCancelId").click(function () { //取消
+            layer.msg('取消成功', {time: 300}, function () {
+                layer.closeAll();
+            });
+        });
+
+        $("#addClassSucessId").click(function () {  //添加班级
+           var clazzName=$("#clazz").val();
+           if (clazzName.indexOf(" ") >= 0 || clazzName == null ||clazzName==""){  //判断不为空 或空格
+               alert("班级名不能为空")
+               return false;
+           }
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/clazz/addClazz',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formClazzId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    }else {
+                        alert("班级名重复")
+                    }
+                },
+                error: function () {
+                    alert("信息格式出错，重新输入！");
+                },
+            });
+        });
+        //-------------------
+
+        $("#tutorCancelId").click(function () { //取消
+            layer.msg('取消成功', {time: 300}, function () {
+                layer.closeAll();
+            });
+        });
+
+        $("#addTutorSucessId").click(function () {  //添加导师
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/admin/addTutor',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formTutorId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    }
+                    if (data["err"]) {
+                        alert("导师重名，请重新填写")
+                    }
+                    if (data["message"]) {
+                        alert("请输入姓名")
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                },
+            });
+        });
+
+
+    })
+</script>
+</body>
+</html>

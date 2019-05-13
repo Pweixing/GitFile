@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header(title)">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${title}"></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" href="/static/css/tutor/style.css">
+    <!---->
+
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/static/bower_components/bootstrap/dist/css/bootstrap.min.css}" >
+    <!-- Font Awesome -->
+    <link rel="stylesheet"  th:href="@{/static/bower_components/font-awesome/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/static/bower_components/Ionicons/css/ionicons.min.css}" >
+    <!-- DataTables -->
+    <link rel="stylesheet"  th:href="@{/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet"  th:href="@{ /static/dist/css/AdminLTE.min.css}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/static/dist/css/skins/_all-skins.min.css }" >
+    <!--百度的webuploder-->
+    <link rel="stylesheet" th:href="@{/static/bower_components/webuploader-0.1.5/webuploader.css}" >
+    <!--引入layui-->
+    <link rel="stylesheet"  th:href="@{/static/layui/css/layui.css}" media="all">
+    <!-- ./wrapper -->
+
+
+    <!--js 文件引入-->
+
+    <!-- jQuery 3 -->
+    <script th:src="@{/static/bower_components/jquery/dist/jquery.min.js}" ></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script th:src="@{/static/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <!-- DataTables -->
+    <script th:src="@{/static/bower_components/datatables.net/js/jquery.dataTables.min.js}" ></script>
+    <script  th:src="@{/static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}" ></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/static/dist/js/adminlte.min.js}" ></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{/static/dist/js/demo.js}" ></script>
+    <!--layer 弹出层-->
+    <script th:src="@{/static/layer/layer.js}" ></script>
+    <script th:src="@{/static/laydate/laydate.js}" ></script>
+    <!--框架-->
+    <script  th:src="@{/static/layui/layui.js}" ></script>
+    <!--百度的webuploder-->
+    <script  th:src="@{/static/bower_components/webuploader-0.1.5/webuploader.min.js}"></script>
+</head>
+</html>

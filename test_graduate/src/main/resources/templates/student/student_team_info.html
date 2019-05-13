@@ -1,0 +1,233 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '学生' )">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--上层-->
+  <header th:replace="student/comm/header::header"></header>
+  <!--中层-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <!--菜单栏-->
+    <section class="sidebar">
+
+
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">菜单</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/student/notices}"><i class="fa fa-circle-o"></i>查看公告栏</a></li>
+
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-commenting"></i>
+            <span>信息交流</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/problem/problemList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+            <li><a th:href="@{/problem/myProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+            <li><a th:href="@{/problem/stuMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>项目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li><a  th:href="@{/student/stuProject}"><i class="fa fa-circle-o"></i>项目库</a></li>
+            <li><a th:href="@{/student/stuTeamInfo}"><i class="fa fa-circle-o"></i>项目小组信息</a></li>
+            <li class="active"><a th:href="@{/student/stuTeam}"><i class="fa fa-circle-o"></i>成员信息</a></li>
+            <li><a th:href="@{/task/stuTaskList}"><i class="fa fa-circle-o"></i>任务、文件上传</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-user"></i>
+            <span>导师</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li><a th:href="@{/student/selectTutor}"><i class="fa fa-circle-o"></i>选择导师</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa  fa-gear"></i>
+            <span>设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/student/stuInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+            <li><a th:href="@{/student/stuPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+          </ul>
+        </li>
+
+
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+
+
+
+
+  <!--  Context-->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header">小组资料</div>
+              <div class="layui-card-body" pad15="">
+
+                <div class="layui-form" th:if="${session.student.stuIsleader} eq 1" >
+                  <form  id="formId" >
+                <div class="layui-form-item" >
+                  <label class="layui-form-label" style="width: 100px;">我的角色</label>
+                  <div class="layui-input-inline">
+                    <input  th:if="${session.student.stuIsleader} eq 1" type="text"  value="项目组长" readonly="" class="layui-input">
+                    <input  th:if="${session.student.stuIsleader} ne 1" type="text"  value="项目成员" readonly="" class="layui-input">
+                  </div>
+                  <div class="layui-form-mid layui-word-aux">不可修改</div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label" style="width: 100px;">小组名称</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="teamName" th:value="${team.teamName}"  class="layui-input">
+                  </div>
+
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label" style="width: 100px;">小组项目名</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="teamProject" th:value="${team.teamProject}" lay-verify="nickname" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label" style="width: 100px;">所属小组</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="teamRemake"th:value="${team.teamRemake}"   readonly="" class="layui-input">
+                  </div>
+                  <div class="layui-form-mid layui-word-aux">不可修改</div>
+                </div>
+
+                <div class="layui-form-item">
+                  <div class="layui-input-block">
+                    <button  type="button" class="layui-btn" lay-filter="setmyinfo" id="updateTeamId">确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                  </div>
+                </div>
+                  </form>
+              </div>
+
+
+
+
+                <!--分开-->
+                <div class="layui-form"   th:if="${session.student.stuIsleader} ne 1">
+                  <div class="layui-form-item" >
+                    <label class="layui-form-label" style="width: 100px;">我的角色</label>
+                    <div class="layui-input-inline">
+                      <input  th:if="${session.student.stuIsleader} eq 1" type="text"  value="项目组长" readonly="" class="layui-input">
+                      <input  th:if="${session.student.stuIsleader} ne 1" type="text"  value="项目成员" readonly="" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100px;">小组名称</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="username" th:value="${team.teamName}" readonly="" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100px;">小组项目名</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="nickname"th:value="${team.teamProject}" readonly="" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100px;">所属小组</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="cellphone"  th:value="${team.teamRemake}"  readonly="" class="layui-input">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script>
+  $(function () {
+      $("#updateTeamId").click(function () {
+          $.ajax({
+              //几个参数需要注意一下
+              type: "POST",//方法类型
+              url: '/team/updateTeam',  //url提交地址
+              dataType: "json",//预期服务器返回的数据类型
+              data: $('#formId').serialize(), //把表单的数据打包
+              success: function (data) {
+                  if (data["success"]) {
+                      layer.msg('修改成功', {time: 300}, function () {
+                          layer.closeAll();
+                          window.parent.location.reload();//刷新父页面
+                      });
+                  }
+              },
+              error: function () {
+                  alert("错误");
+              },
+          });
+      });
+  })
+
+</script>
+</body>
+</html>

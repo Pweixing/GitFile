@@ -1,0 +1,297 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '导师' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <style type="text/css">
+        a:link {color: #FF0000} /* 未访问的链接 */
+
+        a:visited {color:#00ca6d } /* 已访问的链接 */
+
+        a:hover {color: red} /* 当有鼠标悬停在链接上 */
+
+        a:active {color: #0000FF} /* 被选择的链接 *
+       </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <!--上层-->
+    <header th:replace="tutor/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+                        <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i> <span >问题交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+                        <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+                        <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+                        <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+                        <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+                        <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+
+
+            </h1>
+
+        </section>
+        <section class="content" >
+
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15" style="color:#b2b2b2">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>问题列表</span>
+                                <button style="margin-left: 20px;" th:onclick="'javascript:addProblem()'"
+                                        class="btn btn-success btn-xs">发布问题
+                                </button>
+                            </div>
+                            <div class="layui-card-body" th:each="problem:${problems}">
+                                <div class="panel-body ">
+                                    <a href="javascript:;" class="media-left">
+                                        <img th:src="@{/static/img/log_xs.jpg}" height="46px" width="46px">
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="pad-btm">
+                                            <p>
+                                                <small>发布者：</small>
+                                                <b style="color:#00ca6d" th:text="${maps[problem.promulgatorid]}"></b>
+                                            </p>
+                                            <p class="min-font">
+                                                <small th:text="${problem.creatTime}"></small>
+                                            </p>
+                                        </div>
+
+                                        <a th:href="@{/reply/replyTutIndex(problemId=${problem.id})}" style=" color:#dd4b39; margin-left: 30px;  max-width: 1000px; overflow:hidden;
+                                        white-space: nowrap; text-overflow: ellipsis;display:block;  "
+                                           th:text="${problem.problemContext}"></a>
+
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <ul class="list-inline">
+                                                    <li>
+                                                        <i class="fa fa-comment-o"></i>
+                                                        <span th:text="${problem.replyNum}"></span>
+                                                    </li>
+                                                    <li>
+                                                        <i>
+                                                            <small>浏览量:</small>
+                                                        </i>
+                                                        <small th:text="${problem.lookNum}"></small>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-center">
+                                <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span
+                                        th:text="${pageInfo.pages}"></span> 页,共 <span
+                                        th:text="${pageInfo.total}"></span> 条记录</p>
+                                <div>
+                                    <ul class="pagination pagination-lg">
+                                        <li><a th:href="@{/problem/problemTutList(pageNum=1)}">首页</a></li>
+                                        <li th:if="${pageInfo.getPageNum()} gt 1"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()-1})}">上一页</a>
+                                        </li>
+                                        <li th:if="${pageInfo.getPageNum()-3 >=1}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()-3})}"
+                                                th:text="${pageInfo.getPageNum() -3}"></a></li>
+                                        <li th:if="${pageInfo.getPageNum()-2 >=1}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()-2})}"
+                                                th:text="${pageInfo.getPageNum() -2}"></a></li>
+                                        <li th:if="${pageInfo.getPageNum()-1 >=1}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()-1})}"
+                                                th:text="${pageInfo.getPageNum() -1}"></a></li>
+                                        <li class="active"><a href="#" th:text="${pageInfo.getPageNum()}"></a></li>
+                                        <li th:if="${pageInfo.getPageNum()+1 <=pageInfo.getPages()}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()+1})}"
+                                                th:text="${pageInfo.getPageNum() +1}">1</a></li>
+                                        <li th:if="${pageInfo.getPageNum()+2 <=pageInfo.getPages()}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()+2})}"
+                                                th:text="${pageInfo.getPageNum() +2}">1</a></li>
+                                        <li th:if="${pageInfo.getPageNum()+3 <=pageInfo.getPages()}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.getPageNum()+3})}"
+                                                th:text="${pageInfo.getPageNum() +3}">1</a></li>
+                                        <li th:if="${pageInfo.isHasNextPage()}"><a
+                                                th:href="@{/problem/problemTutList(pageNum=${pageInfo.nextPage})}">下一页</a>
+                                        </li>
+                                        <li><a th:href=" @{/problem/problemTutList(pageNum=${pageInfo.getPages()})}">尾页</a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+
+        </section>
+        <!--------隐藏------->
+        <div class="layui-card-body" th:id="problemIndex" style="display: none">
+            <form class="layui-form" id="formId">
+                <div class="layui-form-item layui-form-text">
+                    <input name="promulgatorid" th:value="${session.tutor.id}" style="display: none">
+                    <label class="layui-form-label" style="width: 100px;">问题描述</label>
+                    <div class="layui-input-inline" style="height: 100px;width: 400px;">
+                        <textarea name="problemContext" placeholder="请输入内容....." class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button style=" margin-right: 20px; float: right" class="layui-btn" type="button"
+                                id="submitId">提交
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary" id="anewId">重新填写</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+
+<!-- page script -->
+<script th:inline="javascript">
+
+    function addProblem() {
+        layui.use("layer", function () {
+            layer.open({
+                title: '添加问题',
+                type: 1,
+                content: $("#problemIndex"),
+                area: ['550px', '400px']
+            })
+        })
+    }
+
+    $(function () {
+        $("#submitId").click(function () {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/problem/addProblem',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 400}, function () {
+                            document.getElementById("formId").reset();
+                            layer.closeAll();
+                            window.location.reload();
+
+                        });
+                    }
+                    else if (data["err"]) {
+                        alert("内容不能为空")
+                    }
+                },
+                error: function () {
+                    alert("错误！");
+                },
+            });
+        })
+
+
+    })
+
+</script>
+</body>
+</html>

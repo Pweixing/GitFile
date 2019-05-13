@@ -1,0 +1,18 @@
+spring:
+  #选择环境
+  profiles:
+      active: prod
+
+ #热部署
+  thymeleaf:
+    cache: false
+    #    schema:
+    #     - classpath:department.sql
+
+
+    #分页
+  pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countSql

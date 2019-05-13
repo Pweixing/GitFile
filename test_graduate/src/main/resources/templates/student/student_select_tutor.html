@@ -1,0 +1,182 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '学生' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <header th:replace="student/comm/header::header"></header>
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/student/notices}"><i class="fa fa-circle-o"></i>查看公告栏</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i>
+                        <span>信息交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/stuMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a  th:href="@{/student/stuProject}"><i class="fa fa-circle-o"></i>项目库</a></li>
+                        <li><a th:href="@{/student/stuTeamInfo}"><i class="fa fa-circle-o"></i>项目小组信息</a></li>
+                        <li><a th:href="@{/student/stuTeam}"><i class="fa fa-circle-o"></i>成员信息</a></li>
+                        <li><a th:href="@{/task/stuTaskList}"><i class="fa fa-circle-o"></i>任务、文件上传</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span>导师</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li class="active"><a th:href="@{/student/selectTutor}"><i class="fa fa-circle-o"></i>选择导师</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview" >
+                    <a href="#">
+                        <i class="fa  fa-gear"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/student/stuInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/student/stuPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content" >
+            <div class="layui-fluid" >
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-card" >
+                        <div class="layui-card-header">选择导师</div>
+                        <div class="layui-card-body" pad15="">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width:100px;">我的导师</label>
+                                    <div class="layui-form-mid layui-word-aux"
+                                         th:each="tutor:${tutors}"
+                                         th:if="${student.getStuTutorid()==tutor.id}"
+                                         th:text="${tutor.tutorName}"></div>
+                                </div>
+                                <div class="layui-form-item" th:if="${student.getStuTutorid()==null}">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">选择导师</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <div th:each="tutor:${tutors}">
+                                                导 师 : <button class="btn btn-info" th:text="${tutor.tutorName}"  th:onclick="'javascript:updateStuTutor(\''+${session.student.id}+'\',\''+${tutor.id}+'\');'" > </button>
+                                                <li class="divider"></li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux" style="">只可选择一次</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+        </section>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+
+</div>
+
+<!-- page script -->
+<script>
+    function updateStuTutor(studentId,tutorId) {
+        layer.confirm('确定要选择该导师吗？你只可选择一次', {icon: 3, title: '提示'}, function () {
+            $.ajax({
+                type: "POST",
+                url:  '/admin/updateStuTutor',
+                data: {"studentId": studentId,"tutorId":tutorId},
+                success: function (msg) {
+                    if (msg['success']) {
+                        layer.msg('更换成功', {time: 700}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    }
+
+                },
+                error: function (err) {
+                    alert("数据库信息有误！");
+                },
+
+                dataType: 'json'
+            });
+        });
+    }
+
+
+</script>
+</body>
+</html>

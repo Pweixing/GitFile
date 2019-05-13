@@ -1,0 +1,329 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '导师' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <!--上层-->
+    <header th:replace="tutor/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+                        <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i> <span >问题交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+                        <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+                        <li class="active"><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+                        <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+                        <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+                        <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">任务信息显示</h3>
+                            <small>
+                                <button class="btn btn-info  btn-xs" id="addtaskId">添加任务</button>
+                            </small>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="clazzTbaleID" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>任务名称</th>
+                                    <th>描述</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="task:${tasks}">
+                                    <td th:text="${task.taskName}"></td>
+                                    <td style="width:100px;" th:text="${task.taskDescription}"></td>
+                                    <td th:text="${task.taskStarttime}">3</td>
+                                    <td th:text="${task.taskEndtime}">4</td>
+                                    <td>
+                                        <button  class="btn  btn-danger" th:onclick="'javascript:delTask(\''+${task.id}+'\')'">删除</button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!--隐藏-->
+        <div id="addTaskMessageId" class="register-box" style="display: none">
+            <!--表单信息-->
+            <form id="formTaskId" method="post">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" placeholder="任务名称" name="taskName">
+                </div>
+                <div class="form-group has-feedback">
+          <textarea maxlength="150" class="textarea" style="width: 100%; height: 125px; font-size: 14px;
+                             line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; resize:none "
+                    name="taskDescription" placeholder="描述......"
+          ></textarea>
+                    <div style="position:absolute;bottom:10px;right:0;color:#000;">
+                        <span class="textareaInput">0</span>/<span class="textareaTotal">150</span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    开始时间：
+                    <input type="text" name="taskStarttime" class="demo-input" placeholder="请选择日期" id="test1">
+                </div>
+                <div class="form-group has-feedback">
+                    结束时间：
+                    <input type="text" name="taskEndtime" class="demo-input" placeholder="请选择日期" id="test2">
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button id="cancelId" type="button" class="btn btn-primary btn-block btn-flat ">
+                            取消
+                        </button>
+                    </div>
+                    <div class="col-xs-4 pull-right">
+                        <button id="submitId" type="button" class="btn btn-primary btn-block btn-flat ">
+                            提交
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+
+
+</div>
+
+<!-- page script -->
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#test1'//指定元素
+        , min: 0 //天前
+        // ,max: //天后
+    });
+    laydate.render({
+        elem: '#test2'//指定元素
+        , min: 1 //天前
+        // ,max: //天后
+    });
+
+    function delTask(taskId) {
+        layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+            $.ajax({
+                type:"POST",
+                url:'/task/delTask',
+                dataType:'json',
+                data:{"taskId":taskId},
+                success:function (msg) {
+                    if (msg["success"]){
+                        layer.msg('删除成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();
+                        });
+                    }
+                },
+                error:function () {
+                    alert("出错")
+                }
+            })
+
+
+            layer.close(index);
+        });
+
+
+    }
+
+    $(function () {
+        $("#addtaskId").click(function () {
+            var index = layer.open({
+                type: 1,
+                title: '添加任务',
+                content: $("#addTaskMessageId"),
+                area: ['400px', '400px']
+            });
+        });
+        $("#cancelId").click(function () {
+            layer.msg('取消成功', {time: 200}, function () {
+                document.getElementById("formTaskId").reset();// 清空表单信息
+                layer.closeAll();
+            });
+        })
+        $("#submitId").click(function () {
+            // $("input[type=text]").each(function(e) {
+            //     var text = $(this).val();
+            var name = $("input[name=taskName]").val();
+            var taskDescription = $("textarea[name=taskDescription]").val()
+            var taskStarttime = $("input[name=taskStarttime]").val();
+            var taskEndtime = $("input[name=taskEndtime]").val();
+            if (name == "" || taskDescription == "" || taskStarttime == "" || taskEndtime == "") {
+                alert("不能为空");
+                return false;
+            }
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/task/add',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formTaskId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            document.getElementById("formTaskId").reset();// 清空表单信息
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    }
+                },
+                error: function (err) {
+                    alert("出错");
+                },
+            });
+
+        });
+
+        $("#clazzTbaleID").DataTable(//通过设置表单样式
+            {
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                'language': {
+                    "paginate": {
+                        "next": "下一页",
+                        "previous": "上一页"
+                    },
+                    "sZeroRecords": "没有找到",
+                    "search": "快速搜索",
+                    "emptyTable": "无可用数据",
+                    "lengthMenu": "_MENU_ 项/页",
+                    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项"
+                }
+            }
+        );
+
+
+    })
+
+    $(document).ready(function () {   //文本域字数
+        var lenInput = $('.textarea').text().length;
+        $(".textarea").keyup(function () {
+            lenInput = $(this).val().length;
+            if (lenInput > 0 && lenInput <= 300) {
+                $('.textareaInput').html(lenInput);
+                $('.textarea-btn').attr('disabled', false);
+            } else {
+                $('.textarea-btn').attr('disabled', true);
+            }
+        })
+    });
+
+</script>
+</body>
+</html>

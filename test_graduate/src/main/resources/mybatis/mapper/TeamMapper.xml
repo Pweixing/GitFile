@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qhg.dao.TeamMapper" >
+  <resultMap id="BaseResultMap" type="com.qhg.model.Team" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="team_name" property="teamName" jdbcType="VARCHAR" />
+    <result column="team_project" property="teamProject" jdbcType="VARCHAR" />
+    <result column="team_people_num" property="teamPeopleNum" jdbcType="INTEGER" />
+    <result column="team_tutorId" property="teamTutorid" jdbcType="VARCHAR" />
+    <result column="team_headerId" property="teamHeaderid" jdbcType="VARCHAR" />
+    <result column="team_score" property="teamScore" jdbcType="INTEGER" />
+    <result column="team_remake" property="teamRemake" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, team_name, team_project, team_people_num, team_tutorId, team_headerId, team_score, 
+    team_remake
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qhg.model.TeamExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from team
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from team
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from team
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qhg.model.TeamExample" >
+    delete from team
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qhg.model.Team" >
+    insert into team (id, team_name, team_project, 
+      team_people_num, team_tutorId, team_headerId, 
+      team_score, team_remake)
+    values (#{id,jdbcType=VARCHAR}, #{teamName,jdbcType=VARCHAR}, #{teamProject,jdbcType=VARCHAR}, 
+      #{teamPeopleNum,jdbcType=INTEGER}, #{teamTutorid,jdbcType=VARCHAR}, #{teamHeaderid,jdbcType=VARCHAR}, 
+      #{teamScore,jdbcType=INTEGER}, #{teamRemake,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qhg.model.Team" >
+    insert into team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teamName != null" >
+        team_name,
+      </if>
+      <if test="teamProject != null" >
+        team_project,
+      </if>
+      <if test="teamPeopleNum != null" >
+        team_people_num,
+      </if>
+      <if test="teamTutorid != null" >
+        team_tutorId,
+      </if>
+      <if test="teamHeaderid != null" >
+        team_headerId,
+      </if>
+      <if test="teamScore != null" >
+        team_score,
+      </if>
+      <if test="teamRemake != null" >
+        team_remake,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teamName != null" >
+        #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamProject != null" >
+        #{teamProject,jdbcType=VARCHAR},
+      </if>
+      <if test="teamPeopleNum != null" >
+        #{teamPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="teamTutorid != null" >
+        #{teamTutorid,jdbcType=VARCHAR},
+      </if>
+      <if test="teamHeaderid != null" >
+        #{teamHeaderid,jdbcType=VARCHAR},
+      </if>
+      <if test="teamScore != null" >
+        #{teamScore,jdbcType=INTEGER},
+      </if>
+      <if test="teamRemake != null" >
+        #{teamRemake,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qhg.model.TeamExample" resultType="java.lang.Integer" >
+    select count(*) from team
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update team
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamName != null" >
+        team_name = #{record.teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamProject != null" >
+        team_project = #{record.teamProject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamPeopleNum != null" >
+        team_people_num = #{record.teamPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.teamTutorid != null" >
+        team_tutorId = #{record.teamTutorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamHeaderid != null" >
+        team_headerId = #{record.teamHeaderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamScore != null" >
+        team_score = #{record.teamScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.teamRemake != null" >
+        team_remake = #{record.teamRemake,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update team
+    set id = #{record.id,jdbcType=VARCHAR},
+      team_name = #{record.teamName,jdbcType=VARCHAR},
+      team_project = #{record.teamProject,jdbcType=VARCHAR},
+      team_people_num = #{record.teamPeopleNum,jdbcType=INTEGER},
+      team_tutorId = #{record.teamTutorid,jdbcType=VARCHAR},
+      team_headerId = #{record.teamHeaderid,jdbcType=VARCHAR},
+      team_score = #{record.teamScore,jdbcType=INTEGER},
+      team_remake = #{record.teamRemake,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qhg.model.Team" >
+    update team
+    <set >
+      <if test="teamName != null" >
+        team_name = #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamProject != null" >
+        team_project = #{teamProject,jdbcType=VARCHAR},
+      </if>
+      <if test="teamPeopleNum != null" >
+        team_people_num = #{teamPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="teamTutorid != null" >
+        team_tutorId = #{teamTutorid,jdbcType=VARCHAR},
+      </if>
+      <if test="teamHeaderid != null" >
+        team_headerId = #{teamHeaderid,jdbcType=VARCHAR},
+      </if>
+      <if test="teamScore != null" >
+        team_score = #{teamScore,jdbcType=INTEGER},
+      </if>
+      <if test="teamRemake != null" >
+        team_remake = #{teamRemake,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qhg.model.Team" >
+    update team
+    set team_name = #{teamName,jdbcType=VARCHAR},
+      team_project = #{teamProject,jdbcType=VARCHAR},
+      team_people_num = #{teamPeopleNum,jdbcType=INTEGER},
+      team_tutorId = #{teamTutorid,jdbcType=VARCHAR},
+      team_headerId = #{teamHeaderid,jdbcType=VARCHAR},
+      team_score = #{teamScore,jdbcType=INTEGER},
+      team_remake = #{teamRemake,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findAllTeam" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM  team
+  </select>
+</mapper>

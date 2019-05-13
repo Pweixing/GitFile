@@ -1,0 +1,231 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '导师' )">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--上层-->
+  <!--上层-->
+  <header th:replace="tutor/comm/header::header"></header>
+
+  <!--中层-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <!--菜单栏-->
+    <section class="sidebar">
+
+
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">菜单</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+            <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-commenting"></i> <span >问题交流</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+            <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+            <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+          </ul>
+        </li>
+        <li class="treeview active ">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>项目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+            <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+            <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+            <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+            <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+            <li class="active"><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+          </ul>
+        </li>
+
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa fa-th"></i>
+            <span>学生管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa fa-th"></i>
+            <span>设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+            <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+          </ul>
+        </li>
+
+
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+
+
+
+
+  <!--  Context-->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">小组评分</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="clazzTbaleID" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>小组</th>
+                  <th>小组成绩</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="team:${teams}">
+                  <td th:text="${team.teamRemake}"></td>
+                  <td th:text="${team.teamScore}">
+                  </td>
+                  <td>
+                    <button  class="btn btn-danger btn-xs" th:id="'updateScoreId'+${team.id}" th:onclick="'javascript:updateScore(\''+${team.id}+'\')'">修改</button>
+                    <input  th:id="'inputId'+${team.id}"  maxlength="2" oninput = "value=value.replace(/[^\d]/g,'')" type="text" style="width: 50px; height: 20px; display: none"  class="layui-input">
+                    <button  class="btn btn-success btn-xs" th:id="'sumbitId'+${team.id}" th:onclick="'javascript:sumbit(\''+${team.id}+'\')'" style="display: none" > 确定</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script>
+  
+  function updateScore(teamId) {
+      $("#updateScoreId"+teamId).hide();
+          $("#inputId"+teamId).show();
+          $("#sumbitId"+teamId).show();
+  }
+  
+  function sumbit(teamId) {
+      var score = $("#inputId" + teamId).val();
+      $.ajax({
+          //几个参数需要注意一下
+          type: "POST",//方法类型
+          url: '/team/updateScore',  //url提交地址
+          dataType: "json",//预期服务器返回的数据类型
+          data: {"teamId":teamId,"score":score} ,//把表单的数据打包
+          success: function (data) {
+              if (data["success"]) {
+                  layer.msg('修改成功', {time: 300}, function () {
+                      layer.closeAll();
+                      $("#sumbitId"+teamId).hide();
+                      $("#inputId"+teamId).hide();
+                      $("#updateScoreId"+teamId).show();
+                      window.location.reload();//刷新父页面
+                  });
+              }
+          },
+          error: function () {
+              alert("出错");
+          },
+      });
+
+
+
+  }
+  
+    $(function () {
+
+        $("#clazzTbaleID").DataTable(//通过设置表单样式
+            {
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                'language': {
+                    "paginate": {
+                        "next": "下一页",
+                        "previous": "上一页"
+                    },
+                    "sZeroRecords": "没有找到",
+                    "search": "快速搜索",
+                    "emptyTable": "无可用数据",
+                    "lengthMenu": "_MENU_ 项/页",
+                    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项"
+                }
+            }
+        );
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

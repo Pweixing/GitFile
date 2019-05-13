@@ -1,0 +1,206 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '导师' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <!--上层-->
+    <header th:replace="tutor/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+                        <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i> <span >问题交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+                        <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+                        <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+                        <li class="active"><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+                        <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+                        <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">小组列表信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div th:each="team:${teams}">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="panel">
+                                        <div class="panel-body">
+                                            <h4><b th:text="${team.getTeamRemake()}"></b>
+                                            </h4>
+                                            <div class="media">
+                                                <a class="pull-left" href="#">
+                                                    <img class="thumb media-object" src="/static/img/log_min.jpg"
+                                                         alt="">
+                                                </a>
+                                                <div class="media-body">
+                                                    <address>
+                                                        小组名称： <span th:text="${team.teamName}"></span><br>
+                                                        小组项目名：<span th:text="${team.teamProject}"></span><br>
+                                                        小组组长：<b th:text="${maps[team.id]}"></b><br>
+                                                        小组人数：<span th:text="${team.teamPeopleNum}"></span><br>
+                                                        小组成员：<a style="color: #e5642b"
+                                                                th:href="@{/tutor/teamStu(teamId=${team.id})}">查看(设置组长)</a><br>
+                                                        小组成绩：<span th:text="${team.teamScore}"></span>
+                                                    </address>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer text-center">
+                            <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span
+                                    th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span>
+                                条记录</p>
+                            <div>
+                                <ul class="pagination pagination-lg">
+                                    <li><a th:href="@{/tutor/team(pageNum=1)}">首页</a></li>
+                                    <li th:if="${pageInfo.getPageNum()} gt 1">
+                                        <a th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()-1})}">上一页</a>
+                                    </li>
+                                    <li th:if="${pageInfo.getPageNum()-3 >=1}">
+                                        <a th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()-3})}"
+                                           th:text="${pageInfo.getPageNum() -3}">1</a>
+                                    </li>
+                                    <li th:if="${pageInfo.getPageNum()-2 >=1}">
+                                        <a th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()-2})}"
+                                           th:text="${pageInfo.getPageNum() -2}">1</a>
+                                    </li>
+                                    <li th:if="${pageInfo.getPageNum()-1 >=1}">
+                                        <a th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()-1})}"
+                                           th:text="${pageInfo.getPageNum() -1}">1</a>
+                                    </li>
+
+                                    <li class="active"><a href="#" th:text="${pageInfo.getPageNum()}">1</a></li>
+                                    <li th:if="${pageInfo.getPageNum()+1 <=pageInfo.getPages()}"><a
+                                            th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()+1})}"
+                                            th:text="${pageInfo.getPageNum() +1}">1</a></li>
+                                    <li th:if="${pageInfo.getPageNum()+2 <=pageInfo.getPages()}"><a
+                                            th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()+2})}"
+                                            th:text="${pageInfo.getPageNum() +2}">1</a></li>
+                                    <li th:if="${pageInfo.getPageNum()+3 <=pageInfo.getPages()}"><a
+                                            th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()+3})}"
+                                            th:text="${pageInfo.getPageNum() +3}">1</a></li>
+                                    <li th:if="${pageInfo.getPageNum() lt pageInfo.getPages()}"><a
+                                            th:href="@{/tutor/team(pageNum=${pageInfo.getPageNum()+1})}">下一页</a></li>
+                                    <li><a th:href=" @{/tutor/team(pageNum=${pageInfo.getPages()})}">尾页</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+
+</div>
+
+<!-- page script -->
+<script>
+
+</script>
+</body>
+</html>

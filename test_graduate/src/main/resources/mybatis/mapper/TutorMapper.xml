@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qhg.dao.TutorMapper" >
+  <resultMap id="BaseResultMap" type="com.qhg.model.Tutor" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tutor_name" property="tutorName" jdbcType="VARCHAR" />
+    <result column="tutor_password" property="tutorPassword" jdbcType="VARCHAR" />
+    <result column="tutor_sex" property="tutorSex" jdbcType="VARCHAR" />
+    <result column="tutor_age" property="tutorAge" jdbcType="INTEGER" />
+    <result column="tutor_iphone" property="tutorIphone" jdbcType="VARCHAR" />
+    <result column="tutor_remake" property="tutorRemake" jdbcType="VARCHAR" />
+    <result column="tutor_email" property="tutorEmail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tutor_name, tutor_password, tutor_sex, tutor_age, tutor_iphone, tutor_remake, 
+    tutor_email
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qhg.model.TutorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tutor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tutor
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tutor
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qhg.model.TutorExample" >
+    delete from tutor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qhg.model.Tutor" >
+    insert into tutor (id, tutor_name, tutor_password, 
+      tutor_sex, tutor_age, tutor_iphone, 
+      tutor_remake, tutor_email)
+    values (#{id,jdbcType=VARCHAR}, #{tutorName,jdbcType=VARCHAR}, #{tutorPassword,jdbcType=VARCHAR}, 
+      #{tutorSex,jdbcType=VARCHAR}, #{tutorAge,jdbcType=INTEGER}, #{tutorIphone,jdbcType=VARCHAR}, 
+      #{tutorRemake,jdbcType=VARCHAR}, #{tutorEmail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qhg.model.Tutor" >
+    insert into tutor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tutorName != null" >
+        tutor_name,
+      </if>
+      <if test="tutorPassword != null" >
+        tutor_password,
+      </if>
+      <if test="tutorSex != null" >
+        tutor_sex,
+      </if>
+      <if test="tutorAge != null" >
+        tutor_age,
+      </if>
+      <if test="tutorIphone != null" >
+        tutor_iphone,
+      </if>
+      <if test="tutorRemake != null" >
+        tutor_remake,
+      </if>
+      <if test="tutorEmail != null" >
+        tutor_email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorName != null" >
+        #{tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorPassword != null" >
+        #{tutorPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorSex != null" >
+        #{tutorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAge != null" >
+        #{tutorAge,jdbcType=INTEGER},
+      </if>
+      <if test="tutorIphone != null" >
+        #{tutorIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorRemake != null" >
+        #{tutorRemake,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorEmail != null" >
+        #{tutorEmail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qhg.model.TutorExample" resultType="java.lang.Integer" >
+    select count(*) from tutor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tutor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorName != null" >
+        tutor_name = #{record.tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorPassword != null" >
+        tutor_password = #{record.tutorPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorSex != null" >
+        tutor_sex = #{record.tutorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorAge != null" >
+        tutor_age = #{record.tutorAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.tutorIphone != null" >
+        tutor_iphone = #{record.tutorIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorRemake != null" >
+        tutor_remake = #{record.tutorRemake,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorEmail != null" >
+        tutor_email = #{record.tutorEmail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tutor
+    set id = #{record.id,jdbcType=VARCHAR},
+      tutor_name = #{record.tutorName,jdbcType=VARCHAR},
+      tutor_password = #{record.tutorPassword,jdbcType=VARCHAR},
+      tutor_sex = #{record.tutorSex,jdbcType=VARCHAR},
+      tutor_age = #{record.tutorAge,jdbcType=INTEGER},
+      tutor_iphone = #{record.tutorIphone,jdbcType=VARCHAR},
+      tutor_remake = #{record.tutorRemake,jdbcType=VARCHAR},
+      tutor_email = #{record.tutorEmail,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qhg.model.Tutor" >
+    update tutor
+    <set >
+      <if test="tutorName != null" >
+        tutor_name = #{tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorPassword != null" >
+        tutor_password = #{tutorPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorSex != null" >
+        tutor_sex = #{tutorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAge != null" >
+        tutor_age = #{tutorAge,jdbcType=INTEGER},
+      </if>
+      <if test="tutorIphone != null" >
+        tutor_iphone = #{tutorIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorRemake != null" >
+        tutor_remake = #{tutorRemake,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorEmail != null" >
+        tutor_email = #{tutorEmail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qhg.model.Tutor" >
+    update tutor
+    set tutor_name = #{tutorName,jdbcType=VARCHAR},
+      tutor_password = #{tutorPassword,jdbcType=VARCHAR},
+      tutor_sex = #{tutorSex,jdbcType=VARCHAR},
+      tutor_age = #{tutorAge,jdbcType=INTEGER},
+      tutor_iphone = #{tutorIphone,jdbcType=VARCHAR},
+      tutor_remake = #{tutorRemake,jdbcType=VARCHAR},
+      tutor_email = #{tutorEmail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAllTutor" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tutor
+  </select>
+</mapper>

@@ -1,0 +1,159 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '导师' )">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--上层-->
+  <!--上层-->
+  <header th:replace="tutor/comm/header::header"></header>
+
+  <!--中层-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <!--菜单栏-->
+    <section class="sidebar">
+
+
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">菜单</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+            <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-commenting"></i>
+            <span >问题交流</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+            <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+            <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>项目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+            <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+            <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+            <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+            <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+            <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+          </ul>
+        </li>
+
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa fa-th"></i>
+            <span>学生管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa  fa-gear"></i>
+            <span>设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+            <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+          </ul>
+        </li>
+
+
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+
+
+
+
+  <!--  Context-->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="background-color: #2b2b2b">
+    <section class="content-header">
+      <h1>
+        <small>校园风光</small>
+      </h1>
+    </section>
+    <section class="content" >
+      <div class="layui-carousel" id="test1" style="margin:0 auto" >
+        <div carousel-item>
+          <div><img src="/static/img/collage1.jpeg"></div>
+          <div><img src="/static/img/collage2.jpeg"></div>
+          <div><img src="/static/img/collage3.jpeg"></div>
+          <div><img src="/static/img/collage4.jpeg"></div>
+          <div><img src="/static/img/collage5.jpeg"></div>
+          <div><img src="/static/img/collage6.jpeg"></div>
+
+        </div>
+      </div>
+
+      <!-- /.row -->
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script>
+    layui.use('carousel', function(){ //轮播
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '800px' //设置容器宽度
+            ,height:'533px'
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+            // ,interval:'1000' //自动切换的时间间隔，单位：ms（毫秒），不能低于800
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '导师' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <header th:replace="tutor/comm/header::header"></header>
+
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+                        <li class=" active"><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i> <span>问题交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+                        <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+                        <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+                        <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+                        <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+                        <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>学生管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="box box-info">
+                                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                                    <i class="fa fa-envelope"></i>
+                                    <h3 class="box-title">公告栏</h3>
+                                    <!-- /. tools -->
+                                </div>
+                                <div class="box-body">
+                                    <form method="post" id="formNotice">
+                                        <div class="form-group">
+                                            标题：
+                                            <input type="text" class="form-control" name="title"
+                                                   placeholder="请输入标题......" id="title">
+                                        </div>
+
+                                        <div class="form-group has-feedback">
+                                            内容：<textarea  id="context" maxlength="150" class="textarea" style="width: 100%; height: 125px; font-size: 14px;
+                             line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; resize:none "
+                                                         name="context" placeholder="请输入......"
+                                        ></textarea>
+                                            <div style="position:absolute;bottom:10px;right:0;color:#000;">
+                                                <span class="textareaInput">0</span>/<span
+                                                    class="textareaTotal">150</span>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer clearfix">
+                                            <button type="button" class="pull-right btn btn-default" id="sendNotice">提交
+                                                <i class="fa fa-arrow-circle-right"></i></button>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+
+</div>
+
+<!-- page script -->
+<script>
+    $(function () {
+
+        $("#sendNotice").click(function () {
+            var title=$("#title").val();
+            var context=$("#context").val();
+            if (title.indexOf(" ") >= 0 || title == null ||title==""){  //判断不为空 或空格
+                alert("标题不能为空")
+                return false;
+            }
+            if (context.indexOf(" ") >= 0 || context == null ||context==""){  //判断不为空 或空格
+                alert("内容不能为空")
+                return false;
+            }
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/tutor/addNotice',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formNotice').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+
+                        });
+                    }
+                },
+                error: function (err) {
+                    alert("错误");
+                },
+            });
+
+
+        });
+    })
+    $(document).ready(function () {   //文本域字数
+
+        var lenInput = $('.textarea').text().length;
+        $(".textarea").keyup(function () {
+            lenInput = $(this).val().length;
+            if (lenInput > 0 && lenInput <= 300) {
+                $('.textareaInput').html(lenInput);
+                $('.textarea-btn').attr('disabled', false);
+            } else {
+                $('.textarea-btn').attr('disabled', true);
+            }
+        });
+    });
+</script>
+</body>
+</html>

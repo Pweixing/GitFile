@@ -1,0 +1,239 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '导师' )">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--上层-->
+  <header th:replace="tutor/comm/header::header"></header>
+
+  <!--中层-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <!--菜单栏-->
+    <section class="sidebar">
+
+
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">菜单</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/editNotice}"><i class="fa fa-circle-o"></i>查看公告栏（更新、删除） </a></li>
+            <li><a th:href="@{/tutor/inNotice}"><i class="fa fa-circle-o"></i>发表公告</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-commenting"></i> <span >问题交流</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/problem/problemTutList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+            <li><a th:href="@{/problem/myTutProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+            <li><a th:href="@{/problem/tutMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>项目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/project/projectList}"><i class="fa fa-circle-o"></i>项目库展示</a></li>
+            <li><a th:href="@{/tutor/studentList}"><i class="fa fa-circle-o"></i>项目分组</a></li>
+            <li><a th:href="@{/task/taskList}"><i class="fa fa-circle-o"></i>项目任务表</a></li>
+            <li><a th:href="@{/tutor/team}"><i class="fa fa-circle-o"></i>项目小组</a></li>
+            <li><a th:href="@{/task/taskFile}"><i class="fa fa-circle-o"></i>文件查看、下载</a></li>
+            <li><a th:href="@{/tutor/stuScore}"><i class="fa fa-circle-o"></i>评分</a></li>
+
+
+          </ul>
+        </li>
+
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa fa-th"></i>
+            <span>学生管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/tutor/stuList}"><i class="fa fa-circle-o"></i>查看学生信息</a></li>
+
+          </ul>
+        </li>
+        <li class="treeview active" >
+          <a href="#">
+            <i class="fa fa-th"></i>
+            <span>设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a th:href="@{/tutor/tutorInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+            <li><a th:href="@{/tutor/editPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+          </ul>
+        </li>
+
+
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+
+
+
+
+  <!--  Context-->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <section class="content">
+
+      <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header">设置我的资料</div>
+              <div class="layui-card-body" >
+
+                <form class="layui-form"  id="formId">
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">头像</label>
+                    <div class="layui-img-block">
+                      <img src="/static/dist/img/log.jpg" class="img-circle" alt="User Image">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-form-mid layui-word-aux">导师</div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="tutorName" th:value="${session.tutor.tutorName}"  readonly=""class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">年龄</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="tutorAge" th:value="${session.tutor.tutorAge}" class="layui-input"
+                             oninput = "value=value.replace(/[^\d]/g,'')" maxlength="2">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="tutorSex" th:value="${session.tutor.tutorSex}" readonly="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">不可修改</div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-inline">
+                      <input type="text" maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')"
+                             name="tutorIphone" th:value="${session.tutor.tutorIphone}" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">email</label>
+                    <div class="layui-input-inline">
+                      <input type="text"  id="email1" name="tutorEmail" th:value="${session.tutor.tutorEmail}"  class="layui-input">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline" style="height: 100px;width: 1000px;">
+                      <textarea name="tutorRemake"  th:text="${session.tutor.tutorRemake}" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button class="layui-btn"type="button" id="updateStuId">确认修改</button>
+                      <button type="reset" class="layui-btn layui-btn-primary"  >重新填写</button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+
+<script>
+
+  $(function () {
+    $("#updateStuId").click(function () {
+        var email = document.getElementById("email1").value;
+        var myReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+            if(myReg.test(email)) {
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    url: '/tutor/updateTutor',  //url提交地址
+                    dataType: "json",//预期服务器返回的数据类型
+                    data: $('#formId').serialize(), //把表单的数据打包
+                    success: function (data) {
+                        if (data["success"]) {
+                            layer.msg('修改成功', {time: 300}, function () {
+                                layer.confirm('下次登录有效,是否重新登录?', function(){
+                                    window.location.href="http://132.232.239.128:8080";
+                                    layer.closeAll();
+                            });
+                            });
+                        }
+
+                    },
+                    error: function (err) {
+                        alert("错误！");
+                    },
+                });
+            }else {
+                alert("邮箱格式错误")
+                window.parent.location.reload();//刷新父页面
+
+        }
+
+    });
+
+})
+</script>
+</body>
+</html>

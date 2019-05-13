@@ -1,0 +1,248 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="commons/head::header( '管理员' )">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+	<!--上层-->
+  <header th:replace="admin/comm/header::header"></header>
+  
+  <!--中层-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <!--菜单栏-->
+    <section class="sidebar">
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">菜单</li>
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>班级管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li > <a id="addClassId"><i class="fa fa-circle-o"></i>添加班级 </a></li>
+            <li><a th:href="@{/clazz/clazzManage}"><i class="fa fa-circle-o"></i>班级信息管理 </a></li>
+            <li class="active"><a th:href="@{/clazz/allClazz}"><i class="fa fa-circle-o"></i>查询班级信息</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>学生管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li ><a th:href="@{/admin/allStudent}"><i class="fa fa-circle-o"></i>学生信息查询</a></li>
+            <li><a th:href="@{/admin/stuManage}" ><i class="fa fa-circle-o"></i>学生信息管理</a></li>
+            <li><a th:href="@{/admin/allStuDel}"><i class="fa fa-circle-o"></i>学生信息查询(删除)</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview" >
+          <a href="#">
+            <i class="fa fa-th"></i>
+            <span>导师管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a th:href="@{/admin/selectAllTutor}"><i class="fa fa-circle-o"></i>查询导师信息</a></li>
+            <li ><a id="addTutorId"><i class="fa fa-circle-o"></i>导师新增</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+
+
+
+	<!--表单数据  Context-->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+      		 班级
+        <small>班级信息显示</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>班级管理</a></li>
+        <li class="active">查询班级信息</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="clazzTbaleID" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>班级ID</th>
+                  <th>班级名</th>
+                  <th>班级人数</th>
+                  <th>备注信息</th>
+                  <th>创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  th:each="clazz : ${clazzes}">
+                  <td th:text="${clazz.id}"></td>
+                  <td th:text="${clazz.getClazzName()}"></td>
+                  <td th:text="${clazz.getClazzNum()}"></td>
+                  <td th:text="${clazz.clazzRemake}"></td>
+                  <td th:text="${clazz.clazzCreattime}"></td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!--隐藏部分-->
+  <div th:replace="commons/addclazz_tutor::addtutor"> </div>
+  <div th:replace="commons/addclazz_tutor::addclazz"> </div>
+
+ <footer th:replace="commons/foot::foot"></footer>
+</div>
+
+<!-- page script -->
+<script>
+    $(function () {
+        $("#addClassId").click(function () {  //添加班级按钮  layer 弹出框
+            var index = layer.open({
+                type: 1,
+                content: $("#addClassMessageId"),
+                area: ['400px', '300px']
+            });
+        });
+
+        //-------------------
+        $("#addTutorId").click(function () {  //添加导师信息  layer 弹出框
+            var index2 = layer.open({
+                type: 1,
+                title: "",
+                content: $("#addTutorMessageId"),
+                area: ['500px', '400px']
+            });
+        });
+
+        $("#classCancelId").click(function () { //取消
+            layer.msg('取消成功', {time: 300}, function () {
+                layer.closeAll();
+            });
+        });
+
+        $("#addClassSucessId").click(function () {  //添加班级
+            var clazzName=$("#clazz").val();
+            if (clazzName.indexOf(" ") >= 0 || clazzName == null||clazzName==""){  //判断不为空 或空格
+                alert("班级名不能为空")
+                return false;
+            }
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/clazz/addClazz',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formClazzId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    }else {
+                        alert("班级名重复")
+                    }
+                },
+                error: function () {
+                    alert("信息格式出错，重新输入！");
+                },
+            });
+        });
+        //-------------------
+
+        $("#tutorCancelId").click(function () { //取消
+            layer.msg('取消成功', {time: 300}, function () {
+                layer.closeAll();
+            });
+        });
+
+        $("#addTutorSucessId").click(function () {  //添加导师
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: '/admin/addTutor',  //url提交地址
+                dataType: "json",//预期服务器返回的数据类型
+                data: $('#formTutorId').serialize(), //把表单的数据打包
+                success: function (data) {
+                    if (data["success"]) {
+                        layer.msg('添加成功', {time: 300}, function () {
+                            layer.closeAll();
+                            window.parent.location.reload();//刷新父页面
+                        });
+                    } if (data["err"]) {
+                        alert("导师重名，请重新填写")
+                    }if (data["message"]){
+                        alert("请输入姓名")
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                },
+            });
+        });
+
+        $("#clazzTbaleID").DataTable(//通过设置表单样式
+            {
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                'language': {
+                    "paginate": {
+                        "next": "下一页",
+                        "previous": "上一页"
+                    },
+                    "sZeroRecords": "没有找到",
+                    "search": "快速搜索",
+                    "emptyTable": "无可用数据",
+                    "lengthMenu": "_MENU_ 项/页",
+                    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项"
+                }
+            }
+        );
+
+  })
+</script>
+</body>
+</html>

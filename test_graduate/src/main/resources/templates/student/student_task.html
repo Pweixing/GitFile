@@ -1,0 +1,271 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/head::header( '学生' )">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--上层-->
+    <header th:replace="student/comm/header::header"></header>
+    <!--中层-->
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <!--菜单栏-->
+        <section class="sidebar">
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">菜单</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>公告</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/student/notices}"><i class="fa fa-circle-o"></i>查看公告栏</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-commenting"></i>
+                        <span>信息交流</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/problem/problemList}"><i class="fa fa-circle-o"></i>问题列表</a></li>
+                        <li><a th:href="@{/problem/myProblem}"><i class="fa fa-circle-o"></i>我的问题</a></li>
+                        <li><a th:href="@{/problem/stuMyReply}"><i class="fa fa-circle-o"></i>参与讨论</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>项目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a  th:href="@{/student/stuProject}"><i class="fa fa-circle-o"></i>项目库</a></li>
+                        <li><a th:href="@{/student/stuTeamInfo}"><i class="fa fa-circle-o"></i>项目小组信息</a></li>
+                        <li><a th:href="@{/student/stuTeam}"><i class="fa fa-circle-o"></i>成员信息</a></li>
+                        <li class="active"><a th:href="@{/task/stuTaskList}"><i class="fa fa-circle-o"></i>任务、文件上传</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span>导师</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a th:href="@{/student/selectTutor}"><i class="fa fa-circle-o"></i>选择导师</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview" >
+                    <a href="#">
+                        <i class="fa  fa-gear"></i>
+                        <span>设置</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/student/stuInfo}"><i class="fa fa-circle-o"></i>个人信息</a></li>
+                        <li><a th:href="@{/student/stuPassword}"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                    </ul>
+                </li>
+
+
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!--  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <!--表单数据  Context-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                任务信息
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>项目管理</a></li>
+                <li><a href="#">项目任务</a></li>
+                <li class="active">任务信息</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">任务栏显示</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="clazzTbaleID" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>任务名称</th>
+                                    <th>描述</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
+                                    <th>状态</th>
+                                    <th>文件个数</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="task:${tasks}">
+                                    <td th:text="${task.taskName}">1</td>
+                                    <td th:text="${task.taskDescription}">2</td>
+                                    <td th:text="${task.taskStarttime}">3</td>
+                                    <td th:text="${task.taskEndtime}">4</td>
+                                    <td >
+                                        <p th:if="${task.taskTatus} eq 0">进行中</p>
+                                        <p th:if="${task.taskTatus} eq 1">结束</p>
+                                    </td>
+                                    <td th:text="${maps[task.id]}">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm" th:if="${task.taskTatus==0 &amp;&amp; session.student.stuIsleader==1}"    id="openFileId"
+                                                th:onclick="'javascript:opneFile(\''+${task.id}+'\')'">上传文件</button>
+                                        <a  th:if="${maps[task.id]} gt 0" style="color:#eb7350"  th:href="@{/student/stuFileList(taskId=${task.id })}">查看文件</a>
+
+                                    </td>
+                                    <!--隐藏提交文件页面-->
+                                    <div  th:id="'openFileHtmlId'+${task.id}"  style="display: none">
+                                        <form  th:id="'formId'+${task.id}"  enctype="multipart/form-data" >
+                                            <div class="form-group">
+                                                <label for="exampleInputFile">文件上传</label>
+                                                <input type="file" id="exampleInputFile"   name="fileName"  >
+                                            </div>
+                                            <div class="box-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                        th:onclick="'javascript:sumbitFile(\''+${task.id}+'\')'" >提交</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!---->
+
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- /.content-wrapper -->
+    <footer th:replace="commons/foot::foot"></footer>
+
+</div>
+
+<!-- page script -->
+<script th:inline="javascript">
+    function opneFile(taskId) {
+        var index = layer.open({
+            type: 1,
+            title: '文件上传',
+            content: $("#openFileHtmlId"+taskId),
+            area: ['350px', '300px']
+
+        });
+    }
+    function sumbitFile(taskId) {
+
+        var formData = new FormData($("#formId"+taskId)[0]); //使用表单数据
+        formData.append("taskId",taskId);
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            url: '/file/upload',  //url提交地址
+            dataType: "json",//预期服务器返回的数据类型
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data["success"]) {
+                    layer.msg('成功', {time: 300}, function () {
+                        layer.closeAll();
+                        window.parent.location.reload();
+                    });
+                }
+            },
+            error: function (err) {
+                alert("错误");
+            },
+        });
+
+    }
+
+
+
+    $(function () {
+
+
+        $("#clazzTbaleID").DataTable(//通过设置表单样式
+            {
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                'language': {
+                    "paginate": {
+                        "next": "下一页",
+                        "previous": "上一页"
+                    },
+                    "sZeroRecords": "没有找到",
+                    "search": "",
+                    "emptyTable": "无可用数据",
+                    "lengthMenu": "_MENU_ 项/页",
+                    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项"
+                }
+            }
+        );
+
+    })
+
+</script>
+</body>
+
+
+
+</html>

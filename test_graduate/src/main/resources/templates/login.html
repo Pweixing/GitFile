@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>登录界面</title>
+    <link rel="stylesheet" th:href="@{/static/css/login_css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/login_css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/login_css/font-awesome.min.css}"/>
+</head>
+<body >
+<div class="wrap login_wrap"   >
+    <div class="content"  >
+        <div class="login_box" style="margin-top: 200px; ">
+            <div class="login_form">
+                <div class="login_title">
+                    学生项目管理系统
+                </div>
+                <form th:action="@{/in}"   method="post">
+
+                    <div class="form_text_ipt">
+                        <input name="name" type="text" placeholder="请输入账号">
+                    </div>
+                    <div class="ececk_warning"></div>
+                    <div class="form_text_ipt">
+                        <input name="password" type="password" placeholder="密码">
+                    </div>
+                    <div class="ececk_warning"><span>密码不能为空</span></div>
+                    <!--判断-->
+                     <div style="color: red ;text-align: center" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></div>
+
+                    <div class="form_btn">
+                        <button type="submit"  id="register" >登录</button>
+                    </div>
+
+                </form>
+                <div class="other_login">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div style="text-align:center; font-size: 15px;background-color: #b2b2b2">
+    <p>四川轻化工大学：<a th:href="@{/}"  target="_blank" style="color: #01ff70">项目管理系统</a></p>
+</div>
+<script type="text/javascript" th:src="@{/static/js/login_js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/login_js/common.js}"></script>
+
+<script>
+</script>
+
+</body>
+</html>
